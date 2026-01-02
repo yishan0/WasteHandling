@@ -4,6 +4,7 @@ public class Game : MonoBehaviour
 {
     public static Game instance;
     private int score = 0;
+    private int mode = 0;
 
     private int bottlesCollected = 0;
 
@@ -11,6 +12,7 @@ public class Game : MonoBehaviour
 
     void Awake()
     {
+        DontDestroyOnLoad(this.gameObject);
         if (instance == null)
         {
             instance = this;
@@ -48,11 +50,27 @@ public class Game : MonoBehaviour
         Debug.Log("Score: " + score);
     }
 
+    public void ResetScore()
+    {
+        score = 0;
+        Debug.Log("Score reset to 0");
+    }
+
     public void IncrementBottlesCollected()
     {
         bottlesCollected++;
         Debug.Log("Bottles Collected: " + bottlesCollected);
     }
+
+    public void setMode(int newMode)
+    {
+        mode = newMode;
+        Debug.Log("Mode set to: " + mode);
+    }
     
+    public int getMode()
+    {
+        return mode;
+    }
 
 }

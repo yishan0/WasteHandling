@@ -22,6 +22,17 @@ public class DragTarget : MonoBehaviour
 
 	private TargetJoint2D m_TargetJoint;
 
+	// Public property to access the currently dragged GameObject
+	public GameObject DraggedObject { get; private set; }
+
+	public T GetComponentFromDragged<T>() where T : Component
+	{
+		if (DraggedObject != null)
+		{
+			return DraggedObject.GetComponent<T>();
+		}
+		return null;
+	}
 	void Update ()
 	{
 		var currentMouse = Mouse.current;
@@ -42,8 +53,11 @@ public class DragTarget : MonoBehaviour
 			if (!body)
 				return;
 
+			// Store the dragged object
+			DraggedObject = body.gameObject;
+
 			// Add a target joint to the Rigidbody2D GameObject.
-			m_TargetJoint = body.gameObject.AddComponent<TargetJoint2D> ();
+			m_TargetJoint = DraggedObject.AddComponent<TargetJoint2D> ();
 			m_TargetJoint.dampingRatio = m_Damping;
 			m_TargetJoint.frequency = m_Frequency;
 
@@ -54,6 +68,7 @@ public class DragTarget : MonoBehaviour
 		{
 			Destroy (m_TargetJoint);
 			m_TargetJoint = null;
+			DraggedObject = null; // Clear the reference
 			return;
 		}
 
