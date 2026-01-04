@@ -53,6 +53,7 @@ public class Game : MonoBehaviour
     public void ResetScore()
     {
         score = 0;
+        bottlesCollected = 0;
         Debug.Log("Score reset to 0");
     }
 
@@ -65,6 +66,7 @@ public class Game : MonoBehaviour
     public void setMode(int newMode)
     {
         mode = newMode;
+        bottlesCollected = 0;
         Debug.Log("Mode set to: " + mode);
     }
     

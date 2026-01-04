@@ -4,6 +4,7 @@ public class collisionTrash : MonoBehaviour
 {
 	void OnCollisionEnter2D(Collision2D collision)
 	{
+		AudioManager.Instance.PlaySFX("Trash");
 		Debug.Log(Game.instance.getMode());
 		if (Game.instance.getMode() == 1)
 		{

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FollowPhysicsTransform : MonoBehaviour 
+public class LockSpriteRotation : MonoBehaviour 
 {
     [SerializeField] Transform physicsTransform;
     [SerializeField] Renderer targetRenderer;
@@ -12,15 +12,25 @@ public class FollowPhysicsTransform : MonoBehaviour
     private float timeSinceStart;
     private bool hasStarted = false;
 
-    void Start() 
+    private bool isRinsed = false;
+
+    void Start()
     {
         previousPosition = physicsTransform.position;
         if (targetRenderer == null)
             targetRenderer = GetComponent<Renderer>();
-        
+
         // Start with renderer disabled
         targetRenderer.enabled = false;
         timeSinceStart = 0f;
+        
+        isRinsed = false;
+    }
+
+    public void rinseMilk()
+    {
+        isRinsed = true;
+        targetRenderer.enabled = false; // Ensure it's not visible when rinsed
     }
 
     void LateUpdate() 
@@ -44,8 +54,8 @@ public class FollowPhysicsTransform : MonoBehaviour
 
         // Normal movement detection logic
         Vector3 displacement = physicsTransform.position - previousPosition;
-        
-        if (displacement.magnitude > 0.0001f) 
+
+        if (displacement.magnitude > 0.0001f && !isRinsed) // Considered as movement
         {
             timeSinceLastMovement = 0f;
             targetRenderer.enabled = true;
@@ -53,7 +63,7 @@ public class FollowPhysicsTransform : MonoBehaviour
         else
         {
             timeSinceLastMovement += Time.deltaTime;
-            
+
             // Only hide after no movement for hideDelay seconds
             if (timeSinceLastMovement >= hideDelay)
             {

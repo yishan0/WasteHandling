@@ -37,17 +37,20 @@ public class TaskMenu : MonoBehaviour
     {
         obj.SetActive(false);
         endPanel.SetActive(false);
+        showPrompt();
     }
 
     public void returnToMenu()
     {
+        AudioManager.Instance.PlaySFX("Click");
         SceneManager.LoadScene("Menu");
         Debug.Log("RETURNEDHOME");
     }
 
     public void restartTask()
     {
-        if(Game.instance.getMode() == 1)
+        AudioManager.Instance.PlaySFX("Click");
+        if (Game.instance.getMode() == 1)
             SceneManager.LoadScene("Task1");
         if(Game.instance.getMode() == 2)
             SceneManager.LoadScene("Task2");
@@ -56,7 +59,8 @@ public class TaskMenu : MonoBehaviour
 
     public void showPrompt()
     {
-        if(Game.instance.getMode() == 1)
+        AudioManager.Instance.PlaySFX("Click");
+        if (Game.instance.getMode() == 1)
             obj.SetActive(true);
         if(Game.instance.getMode() == 2)
             panelBig.SetActive(true);
@@ -78,19 +82,22 @@ public class TaskMenu : MonoBehaviour
 
     public void warnRinse()
     {
+        AudioManager.Instance.PlaySFX("Warn");
         obj.SetActive(true);
         Debug.Log("RINSE WARNING SHOWN");
-        obj.GetComponentInChildren<TextMeshProUGUI>().text = "Hint: Remember to rinse the bottle before emptying!";
+        obj.GetComponentInChildren<TextMeshProUGUI>().text = "Hint: Remember to empty the bottle before rinsing!";
     }
 
     public void warnEmpty()
     {
+        AudioManager.Instance.PlaySFX("Warn");
         obj.SetActive(true);
         Debug.Log("RINSE ALREADY WARNING SHOWN");
         obj.GetComponentInChildren<TextMeshProUGUI>().text = "Hint: This bottle has already been rinsed, cannot empty!";
     }
     public void showHint()
     {
+        AudioManager.Instance.PlaySFX("Warn");
         obj.SetActive(true);
         Debug.Log("TIME HINT SHOWN");
         obj.GetComponentInChildren<TextMeshProUGUI>().text = "Great effort! Remember you can try other tasks too!";
@@ -98,6 +105,7 @@ public class TaskMenu : MonoBehaviour
 
     public void hidePrompt()
     {
+        AudioManager.Instance.PlaySFX("Click");
         obj.SetActive(false);
         panelBig.SetActive(false);
         Debug.Log("PROMPT HIDDEN");
@@ -105,6 +113,7 @@ public class TaskMenu : MonoBehaviour
 
     public void hideEndPanel()
     {
+        AudioManager.Instance.PlaySFX("Click");
         endPanel.SetActive(false);
         Debug.Log("ENDPANEL HIDDEN");
         returnToMenu();
@@ -114,6 +123,7 @@ public class TaskMenu : MonoBehaviour
     {
         if (isAllCorrect)
         {
+            AudioManager.Instance.PlaySFX("Success");
             Game.instance.ResetScore();
             endPanel.SetActive(true);
             Debug.Log("RESULT SHOWN - ALL CORRECT");
@@ -131,6 +141,7 @@ public class TaskMenu : MonoBehaviour
         }
         else
         {
+            AudioManager.Instance.PlaySFX("Warn");
             Game.instance.ResetScore();
             endPanel.SetActive(true);
             GameObject retryButton = GameObject.Find("Retry");
